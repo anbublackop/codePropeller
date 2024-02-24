@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stylish Webpage</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header class="page-header">
+    <h1>Prompt Propeller</h1>
+  </header>
+  <div class="container">
+    <nav class="navbar">
+      <ul>
+        <li class="nav-item active" data-tab="choice1">Generate code using a prompt</li>
+        <li class="nav-item" data-tab="choice2">Generate Augmented Data</li>
+        <li class="nav-item" data-tab="choice3">Code Review/Analysis</li>
+        <li class="nav-item" data-tab="choice4">Document Generation</li>
+      
+      </ul>
+    </nav>
+    <div class="content">
+      <div class="tabcontent active" id="choice1">
+        <h2>Generate code using a prompt</h2>
+        <div class="generate-code">
+          <textarea placeholder="Write your details here to generate code!"></textarea>
+          <button id="generateCodeBtn" onclick="startProcess()">Start the process!</button>
+          <div id="loadingIcon" style="display: none;">Generating code...</div>
+          <div class="generated-code" style="display: none;">
+            <p>Generated code looks like this:</p>
+            <code id="generatedCode"></code>
+          </div>
+        </div>
+      </div>
+      <div class="tabcontent" id="choice2">
+        <h2>Generate Augmented Data</h2>
+        <div class="generate-data">
+          <label for="csvFileInput">Choose a CSV file:</label>
+          <input type="file" id="csvFileInput" accept=".csv">
+          <textarea id="dataTextArea" placeholder="Enter prompt to create augmented data..." rows="10"></textarea>
+          <button onclick="startGeneratingData()">Start generating the augmented data</button>
+
+          <div class="file-preview" style="display: none;">
+            <h3>Preview</h3>
+            <table id="previewTable">
+              <!-- Preview content will be added here dynamically -->
+            </table>
+          </div>
+
+          <div class="generated-data" style="display: none;">
+            <h3>Generated Data Preview</h3>
+            <table id="generatedDataTable">
+              <!-- Generated data content will be added here dynamically -->
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="tabcontent" id="choice3">
+        <h2>Code Review/Analysis</h2>
+        <div class="generate-review">
+          <label for="csvFileInput">Choose a .py file:</label>
+          <input type="file" id="pyFileInput1" accept=".py">
+          <textarea id="dataTextArea" placeholder="Enter prompt to create data review..." rows="10"></textarea>
+          <!-- <button onclick="codeReview()">Start generating the code review...</button> -->
+          <!-- <textarea placeholder="Write your details here to generate code!"></textarea> -->
+          <button id="generateCodeBtn" onclick="codeReview()">Start code review</button>
+          <div id="loadingIcon" style="display: none;">Generating code Review...</div>
+          <div class="generated-review" style="display: none;">
+            <p>Generated code review looks review looks like this:</p>
+            <code id="generatedReview"></code>
+          </div>
+        </div>
+      </div>
+      <div class="tabcontent" id="choice4">
+        <h2>Document Generation</h2>
+        <!-- <h2>Generate documentation prompt</h2> -->
+        <div class="generate-document">
+          <label for="csvFileInput">Choose a .py file:</label>
+          <input type="file" id="pyFileInput" accept=".py">
+          <textarea id="dataTextArea" placeholder="Write your details here to get code documentation"></textarea>
+          <button id="generateCodeBtn" onclick="docGeneration()">Start document generation</button>
+          <div id="loadingIcon" style="display: none;">Generating code documentation...</div>
+          <div class="generated-document" style="display: none;">
+            <p>Generated docmentation looks like :</p>
+            <code id="generatedDoc"></code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

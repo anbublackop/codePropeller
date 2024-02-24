@@ -1,0 +1,29 @@
+ ### CSV to JSON Converter
+---
+
+### Functionality:
+- Reads a CSV file, converts it into JSON format, and saves it as a separate JSON file.
+
+### Function:
+- `csv_to_json(input_csv_file_path, output_json_file_path)`
+
+### Description:
+- This function takes a CSV file as input, parses it, converts it into JSON format, and saves the output in a separate JSON file with the specified file name.
+
+### Parameters:
+- `input_csv_file_path`: Path to the input CSV file.
+- `output_json_file_path`: Path to the output JSON file.
+
+### Return value:
+- None.
+
+### Raises and exceptions:
+- `IOError`: If there is an error while reading or writing to the files.
+- `JSONDecodeError`: If there is an error while parsing the CSV file.
+
+### Dependencies/Requirements:
+- `csv` module
+- `json` module
+
+### Version History:
+- v1.0.0: Initial release.
