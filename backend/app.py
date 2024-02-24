@@ -7,7 +7,9 @@ from create_csv_data import create_augmentated_data
 from GenAI_Code_Gen import generate_code, prompt_str
 from code_review_model_first import model_response
 from document_generation import doc_gen
+from git_push import pr_request_inputs
 import logging
+import json
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -93,6 +95,29 @@ def doc_generation():
         logger.info(f"Getting params as {prompt_str}")
         res = doc_gen(file_path,prompt_str)
         logger.info(res)
+        return Response(
+            response = res,
+            status = 200            
+        )
+    except Exception as e:
+        logger.info(f"Getting exception as: {e}")
+        return Response(
+            response = "Internal server error",
+            status = 500            
+        )
+
+@app.route('/commit-and-push', methods=["POST"])
+# ‘/’ URL is bound with commit_and_push() function.
+def commit_and_push():
+    try:
+        files = request.json.get('files')
+        repo_path = request.json.get('repo_path')
+        target_path = request.json.get('target_path')
+        branch_name = request.json.get('branch_name')
+        commit_message = request.json.get('commit_message')
+        logger.info(f"Getting params as {files}")
+        logger.info(files)
+        res = pr_request_inputs(files[0], files[1], repo_path, target_path, branch_name, commit_message)
         return Response(
             response = res,
             status = 200            

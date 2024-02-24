@@ -19,7 +19,7 @@
         <li class="nav-item" data-tab="choice2">Generate Augmented Data</li>
         <li class="nav-item" data-tab="choice3">Code Review/Analysis</li>
         <li class="nav-item" data-tab="choice4">Document Generation</li>
-      
+        <li class="nav-item" data-tab="choice5">The Git Flow</li>
       </ul>
     </nav>
     <div class="content">
@@ -86,6 +86,20 @@
           <div class="generated-document" style="display: none;">
             <p>Generated docmentation looks like :</p>
             <code id="generatedDoc"></code>
+          </div>
+        </div>
+      </div>
+      <div class="tabcontent" id="choice5">
+        <h2>The Git Flow</h2>
+        <div class="generate-document">
+          <input type="file" id="multiFileInput" name="files[]"  style="margin: 10px 0px 15px 0px;" multiple accept="*"/>
+          <textarea id="repoTextField" placeholder="Add repo path here"></textarea>
+          <textarea id="filePathTextField" placeholder="File path where files need to be committed"></textarea>
+          <textarea id="branchNameField" placeholder="Name of the branch"></textarea>
+          <textarea id="commitTextField" placeholder="Write your commit message here"></textarea>
+          <button id="pushBtn" onclick="commitAndPush()">Push to remote</button>
+          <div class="generated-git-link" style="display: none;">
+            <label id="generatedGitLink"></label>
           </div>
         </div>
       </div>

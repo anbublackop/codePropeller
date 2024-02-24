@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   const navItems = document.querySelectorAll('.nav-item');
   const tabContents = document.querySelectorAll('.tabcontent');
-
   navItems.forEach(item => {
     item.addEventListener('click', () => {
       const tabId = item.getAttribute('data-tab');
@@ -20,11 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const selectedNavItem = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
     const selectedTabContent = document.getElementById(tabId);
-
     selectedNavItem.classList.add('active');
     selectedTabContent.classList.add('active');
   }
-
   // Activate the first tab by default
   activateTab('choice1');
 });
@@ -34,11 +31,9 @@ function startProcess() {
   const generatedCode = document.getElementById('generatedCode');
   const generatedCodeDiv = document.querySelector('.generated-code');
   const generateCodeBtn = document.getElementById('generateCodeBtn');
-
   // Simulate code generation process (e.g., using entered text)
   const userInput = textarea.value;
   let generate_code_response = null;
-
   generateCodeBtn.innerHTML = "Generating code...";
 
   $.ajax({
@@ -59,7 +54,6 @@ function startProcess() {
       // Handle any errors
     }
   });
-
   const generatedText = generate_code_response
   // Display the generated code
   generatedCode.textContent = generatedText;
@@ -70,14 +64,10 @@ function startGeneratingData() {
   const fileInput = document.getElementById('csvFileInput');
   const textarea = document.getElementById('dataTextArea');
   const userInput = textarea.value;
-
   const file = fileInput.files[0];
-
   let generated_csv_response = null;
-
   if (file) {
     const reader = new FileReader();
-
     $.ajax({
       url: 'http://127.0.0.1:5000/augment-data',
       method: 'POST',
@@ -121,7 +111,6 @@ function parseCSV(csvData) {
 function displayPreview(data) {
   const previewTable = document.getElementById('previewTable');
   previewTable.innerHTML = '';
-
   for (let i = 0; i < data.length; i++) {
     const row = document.createElement('tr');
     for (let j = 0; j < data[i].length; j++) {
@@ -131,7 +120,6 @@ function displayPreview(data) {
     }
     previewTable.appendChild(row);
   }
-
   // Show the preview section
   document.querySelector('.file-preview').style.display = 'block';
 }
@@ -141,19 +129,13 @@ function codeReview() {
   const generatedReview = document.getElementById('generatedReview');
   const generatedReviewDiv = document.querySelector('.generated-review');
   // const generateCodeBtn = document.getElementById('generateCodeBtn');
-
   // Simulate code generation process (e.g., using entered text)
-
   let generate_code_response = null;
-
   // generateCodeBtn.innerHTML = "Generating code review...";
-
   const fileInput = document.getElementById('pyFileInput1');
   const textarea = document.getElementById('dataTextArea');
   const userInput = textarea.value;
-
   const file = fileInput.files[0];
-
   if (file) {
     const reader = new FileReader();
     $.ajax({
@@ -176,14 +158,11 @@ function codeReview() {
   }else {
     alert('Please select a python file.');
   }
-
   const generatedText = generate_code_response
   // Display the generated code
   generatedReview.textContent = generatedText;
   generatedReviewDiv.style.display = 'block';
 }
-
-
 
 function docGeneration() {
   // const textarea = document.querySelector('.generate-code textarea');
@@ -225,11 +204,57 @@ function docGeneration() {
   }else {
     alert('Please select a python file.');
   }
-
   const generatedText = generate_code_response
   // Display the generated code
   generatedDoc.textContent = generatedText;
   generatedDocDiv.style.display = 'block';
+}
 
-  
+function commitAndPush(){
+  const fileInput = document.getElementById('multiFileInput');
+  const repoText = document.getElementById('repoTextField').value;
+  const filePathText = document.getElementById('filePathTextField').value;
+  const branchName = document.getElementById('branchNameField').value;
+  const commitText = document.getElementById('commitTextField').value;
+  // const responseText = document.getElementById('')
+  const generatedGitLink = document.getElementById('generatedGitLink');
+  const generatedGitLinkDiv = document.querySelector('.generated-git-link');
+
+  const files = fileInput.files;
+  let file_names = [];
+  for(let file in files){
+    if (files.hasOwnProperty(file)){
+        file_names.push(files[file].name);
+    }
+  }
+  data_to_send = JSON.stringify({ 
+    "files": file_names,
+    "repo_path": repoText,
+    "target_path": filePathText,
+    "branch_name": branchName,
+    "commit_message": commitText
+  });
+  let generate_code_response = null;
+
+  if (files) {
+    const reader = new FileReader();
+    $.ajax({
+      url: 'http://127.0.0.1:5000/commit-and-push',
+      method: 'POST',
+      data: data_to_send,
+      contentType: "application/json",
+      async: false,
+      success: function (response) {
+        generate_code_response = response
+      },
+      error: function (xhr, status, error) {
+        // Handle any errors
+      }
+    });
+  } else {
+    alert('Please select atleast one file.');
+  }
+  // Display the generated code
+  generatedGitLink.textContent = generate_code_response;
+  generatedGitLinkDiv.style.display = 'block';
 }
