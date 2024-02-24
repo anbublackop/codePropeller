@@ -131,7 +131,7 @@ function displayPreview(data) {
     }
     previewTable.appendChild(row);
   }
-
+  let sys = 0;
   // Show the preview section
   document.querySelector('.file-preview').style.display = 'block';
 }
